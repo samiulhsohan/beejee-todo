@@ -13,9 +13,14 @@ type SeedData = Array<{
   updatedAt: Date
 }>
 
-function asUTC() {
-  const date = new Date()
+function asUTC(date: Date) {
   return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+}
+
+function fromNow(days: number) {
+  return asUTC(
+    new Date(asUTC(new Date()).getTime() + 1000 * 60 * 60 * 24 * days),
+  )
 }
 
 async function seed() {
@@ -38,8 +43,8 @@ async function seed() {
       task: 'Buy Mango',
       completed: false,
       edited: true,
-      createdAt: asUTC(),
-      updatedAt: asUTC(),
+      createdAt: fromNow(-1),
+      updatedAt: fromNow(-1),
     },
     {
       username: 'samiulhsohan',
@@ -47,8 +52,8 @@ async function seed() {
       task: 'Complete BeeJee Taks',
       completed: true,
       edited: false,
-      createdAt: asUTC(),
-      updatedAt: asUTC(),
+      createdAt: fromNow(0),
+      updatedAt: fromNow(0),
     },
   ]
 
