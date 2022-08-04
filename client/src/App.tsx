@@ -1,10 +1,11 @@
-import { Button } from '@chakra-ui/react'
+import { Route, Routes } from 'react-router-dom'
+import { Todo } from './features'
 
 function App() {
   return (
-    <div>
-      <Button>Hello</Button>
-    </div>
+    <Routes>
+      <Route path="/" element={<Todo />} />
+    </Routes>
   )
 }
 
