@@ -1,7 +1,7 @@
 export type APIResponse<T> = {
   success: boolean
   errorMessage: string | null
-  data: T | null
+  result: T | null
 }
 
 export type Todo = {
@@ -15,4 +15,4 @@ export type Todo = {
   updatedAt: Date
 }
 
-export type GetTodoResponse = APIResponse<{ todo: Todo; count: number }>
+export type GetTodoResponse = APIResponse<{ todo: Todo[]; count: number }>

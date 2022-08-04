@@ -33,8 +33,8 @@ const createSchema = yup.object().shape({
 })
 
 const updateSchema = yup.object().shape({
-  task: yup.string().required().strict(),
-  completed: yup.boolean().required().strict(),
+  task: yup.string().strict(),
+  completed: yup.boolean().strict(),
 })
 
 export async function getTodos(

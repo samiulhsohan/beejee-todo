@@ -1,4 +1,4 @@
-import { Button, HStack, VStack } from '@chakra-ui/react'
+import { Button, HStack, Stack, VStack } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextInput } from '../../components'
 import { useCreateTodoMutation } from '../../services'
@@ -31,7 +31,7 @@ export default function CreateTodo() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack border="1px" borderColor="gray.300" rounded="md" p="4">
+        <Stack border="1px" borderColor="gray.200" rounded="md" p="4">
           <HStack justify="start" align="start">
             <TextInput
               id="username"
@@ -67,14 +67,14 @@ export default function CreateTodo() {
           />
 
           <Button
-            colorScheme="blue"
+            colorScheme="yellow"
             isLoading={isSubmitting}
             type="submit"
             width="full"
           >
             Create Todo
           </Button>
-        </VStack>
+        </Stack>
       </form>
     </div>
   )
