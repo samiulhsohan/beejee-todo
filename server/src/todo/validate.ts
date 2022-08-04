@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import * as yup from 'yup'
-import { sendBadRequestError } from '../utils'
+import { validateSchema } from '../utils'
 
 const getSchema = yup.object().shape({
   skip: yup.number().required(),
@@ -32,24 +32,17 @@ const createSchema = yup.object().shape({
   task: yup.string().required().strict(),
 })
 
+const updateSchema = yup.object().shape({
+  task: yup.string().required().strict(),
+  completed: yup.boolean().required().strict(),
+})
+
 export async function getTodos(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  try {
-    await getSchema.validate(req.query)
-    next()
-  } catch (error) {
-    const type = error?.type
-    const path = error?.path
-
-    if (type === 'required') {
-      sendBadRequestError(res, `${path} field is required`)
-    } else {
-      sendBadRequestError(res, `Invalid ${path} provided`)
-    }
-  }
+  validateSchema({ res, next, data: req.query, schema: getSchema })
 }
 
 export async function createTodo(
@@ -57,17 +50,13 @@ export async function createTodo(
   res: Response,
   next: NextFunction,
 ) {
-  try {
-    await createSchema.validate(req.body)
-    next()
-  } catch (error) {
-    const type = error?.type
-    const path = error?.path
+  validateSchema({ res, next, data: req.body, schema: createSchema })
+}
 
-    if (type === 'required') {
-      sendBadRequestError(res, `${path} field is required`)
-    } else {
-      sendBadRequestError(res, `Invalid ${path} provided`)
-    }
-  }
+export async function updateTodo(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  validateSchema({ res, next, data: req.body, schema: updateSchema })
 }

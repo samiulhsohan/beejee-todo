@@ -45,3 +45,26 @@ export async function createTodo({
     },
   })
 }
+
+export async function updateTodo({
+  id,
+  task,
+  completed,
+}: {
+  id: number
+  task: string
+  completed: boolean
+}) {
+  const todo = await prisma.todo.findUnique({ where: { id } })
+  if (!todo) return null
+  return prisma.todo.update({
+    where: {
+      id,
+    },
+    data: {
+      task,
+      completed,
+      edited: true,
+    },
+  })
+}
