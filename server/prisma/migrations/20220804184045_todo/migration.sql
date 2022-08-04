@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Todo" ALTER COLUMN "completed" DROP NOT NULL,
+ALTER COLUMN "completed" SET DEFAULT false,
+ALTER COLUMN "edited" DROP NOT NULL,
+ALTER COLUMN "edited" SET DEFAULT false;

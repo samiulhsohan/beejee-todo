@@ -27,3 +27,21 @@ export async function getTodos({
     count,
   }
 }
+
+export async function createTodo({
+  username,
+  email,
+  task,
+}: {
+  username: string
+  email: string
+  task: string
+}) {
+  return prisma.todo.create({
+    data: {
+      username,
+      email,
+      task,
+    },
+  })
+}

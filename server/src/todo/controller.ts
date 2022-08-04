@@ -18,3 +18,8 @@ export async function getTodos(req: Request, res: Response) {
     sendServerError(res)
   }
 }
+
+export async function createTodo(req: Request, res: Response) {
+  const todo = await service.createTodo(req.body)
+  sendResponse(res, todo)
+}

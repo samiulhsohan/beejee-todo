@@ -26,6 +26,12 @@ const getSchema = yup.object().shape({
     .strict(true),
 })
 
+const createSchema = yup.object().shape({
+  username: yup.string().required().strict(true),
+  email: yup.string().email().required().strict(true),
+  task: yup.string().required().strict(),
+})
+
 export async function getTodos(
   req: Request,
   res: Response,
@@ -33,6 +39,26 @@ export async function getTodos(
 ) {
   try {
     await getSchema.validate(req.query)
+    next()
+  } catch (error) {
+    const type = error?.type
+    const path = error?.path
+
+    if (type === 'required') {
+      sendBadRequestError(res, `${path} field is required`)
+    } else {
+      sendBadRequestError(res, `Invalid ${path} provided`)
+    }
+  }
+}
+
+export async function createTodo(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    await createSchema.validate(req.body)
     next()
   } catch (error) {
     const type = error?.type

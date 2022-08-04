@@ -5,3 +5,4 @@ import * as validate from './validate'
 export const router = Router()
 
 router.get('/', validate.getTodos, controller.getTodos)
+router.post('/', validate.createTodo, controller.createTodo)

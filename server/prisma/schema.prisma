@@ -14,12 +14,12 @@ model User {
 }
 
 model Todo {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   username  String
   email     String
   task      String
-  completed Boolean
-  edited    Boolean
+  completed Boolean? @default(false)
+  edited    Boolean? @default(false)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

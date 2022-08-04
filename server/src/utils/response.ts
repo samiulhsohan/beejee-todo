@@ -25,5 +25,5 @@ export function sendServerError(res: Response) {
 }
 
 export function sendBadRequestError(res: Response, message?: string) {
-  res.status(500).send(createErrorResponse(message ?? 'Bad request'))
+  res.status(400).send(createErrorResponse(message ?? 'Bad request'))
 }
