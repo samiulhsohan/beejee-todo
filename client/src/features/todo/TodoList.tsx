@@ -1,5 +1,5 @@
 import { Box, BoxProps, Stack, StackDivider } from '@chakra-ui/react'
-import { useGetTodosQuery } from '../../services'
+import { useGetTodosQuery, useGetUserQuery } from '../../services'
 import { useAppSelector } from '../../store'
 import TodoItem from './TodoItem'
 import {
@@ -18,6 +18,7 @@ export default function TodoLists({ ...props }: TodoListsProps) {
   const sortBy = useAppSelector(selectSortBy)
 
   const { data } = useGetTodosQuery({ skip, take, sortBy, sortOrder })
+  const { data: user } = useGetUserQuery()
 
   return (
     <Box {...props}>
@@ -30,7 +31,7 @@ export default function TodoLists({ ...props }: TodoListsProps) {
         borderRadius="md"
       >
         {data?.todo.map(todo => (
-          <TodoItem key={todo.id} {...{ todo }} />
+          <TodoItem key={todo.id} {...{ todo, user }} />
         ))}
       </Stack>
     </Box>

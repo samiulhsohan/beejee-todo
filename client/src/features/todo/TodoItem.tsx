@@ -14,18 +14,18 @@ import { IoCheckmark, IoClose } from 'react-icons/io5'
 import { TextInput } from '../../components'
 import { api, useGetUserQuery, useUpdateTodoMutation } from '../../services'
 import { useAppDispatch } from '../../store'
-import { ErrorResponse, Todo } from '../../types'
+import { ErrorResponse, Todo, User } from '../../types'
 
 interface TodoItemProps {
   todo: Todo
+  user?: User | null
 }
 
-export default function TodoItem({ todo }: TodoItemProps) {
+export default function TodoItem({ todo, user }: TodoItemProps) {
   const toast = useToast()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { data: user } = useGetUserQuery()
   const [updateTodo, { error, isLoading }] = useUpdateTodoMutation()
 
   const [task, setTask] = useState(todo.task)
