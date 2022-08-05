@@ -2,13 +2,16 @@ import express from 'express'
 import cors from 'cors'
 import cookieParse from 'cookie-parser'
 import { router } from './router'
+import { __prod__ } from './constants'
 
 const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(
   cors({
-    origin: ['http://localhost:5173'],
+    origin: __prod__
+      ? 'https://beejee.samiulhsohan.com'
+      : 'http://localhost:5173',
     credentials: true,
   }),
 )
