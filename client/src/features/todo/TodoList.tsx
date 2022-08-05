@@ -1,9 +1,21 @@
-import { Stack, StackDivider, VStack } from '@chakra-ui/react'
+import { Stack, StackDivider } from '@chakra-ui/react'
 import { useGetTodosQuery } from '../../services'
+import { useAppSelector } from '../../store'
 import TodoItem from './TodoItem'
+import {
+  selectOrderBy,
+  selectSkip,
+  selectSortBy,
+  selectTake,
+} from './todoSlice'
 
 export default function TodoLists() {
-  const { data } = useGetTodosQuery({ skip: 0, take: 3 })
+  const skip = useAppSelector(selectSkip)
+  const take = useAppSelector(selectTake)
+  const orderBy = useAppSelector(selectOrderBy)
+  const sortBy = useAppSelector(selectSortBy)
+
+  const { data } = useGetTodosQuery({ skip, take, sortBy, orderBy })
 
   return (
     <Stack

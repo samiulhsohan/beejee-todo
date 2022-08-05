@@ -1,5 +1,6 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import todoReducer from './features/todo/todoSlice'
 import { api } from './services/'
 
 export const createStore = (
@@ -8,6 +9,7 @@ export const createStore = (
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
+      todo: todoReducer,
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(api.middleware),
@@ -17,5 +19,7 @@ export const createStore = (
 export const store = createStore()
 
 export type AppDispatch = typeof store.dispatch
-export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>
+
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

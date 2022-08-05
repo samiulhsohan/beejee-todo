@@ -13,7 +13,8 @@ const getSchema = yup.object().shape({
         value === 'username' ||
         value === 'email' ||
         value === 'task' ||
-        value === 'completed'
+        value === 'completed' ||
+        value === 'createdAt'
       )
     })
     .strict(true),
