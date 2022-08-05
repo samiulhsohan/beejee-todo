@@ -83,7 +83,7 @@ export async function updateTodo({
     data: {
       task,
       completed,
-      edited: true,
+      edited: !!task,
     },
     select: todoSelect,
   })

@@ -49,7 +49,7 @@ async function seed() {
     {
       username: 'samiulhsohan',
       email: 'samiulhsohan@gmail.com',
-      task: 'Complete BeeJee Taks',
+      task: 'Complete BeeJee Task',
       completed: true,
       edited: false,
       createdAt: fromNow(0),

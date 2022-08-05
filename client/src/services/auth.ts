@@ -10,7 +10,6 @@ export const authApi = api.injectEndpoints({
         body,
       }),
       transformResponse: (response: APIResponse<User>) => response.result,
-      invalidatesTags: ['User'],
     }),
     logout: builder.mutation<null, void>({
       query: () => ({

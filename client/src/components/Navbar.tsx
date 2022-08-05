@@ -1,5 +1,5 @@
 import { Box, Button, Heading, HStack, Spinner } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { api, useGetUserQuery, useLogoutMutation } from '../services'
 import { useAppDispatch } from '../store'
 
@@ -24,7 +24,9 @@ export default function Navbar() {
       borderBottom="1px"
       borderColor="gray.200"
     >
-      <Heading size="md">BeeJee Todo</Heading>
+      <Link to="/">
+        <Heading size="md">BeeJee Todo</Heading>
+      </Link>
       <Box>
         {isFetching ? (
           <Spinner />
