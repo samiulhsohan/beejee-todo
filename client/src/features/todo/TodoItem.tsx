@@ -2,13 +2,16 @@ import {
   Box,
   Checkbox,
   HStack,
+  IconButton,
   Stack,
   Tag,
   Text,
   useToast,
 } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { IoCheckmark, IoClose } from 'react-icons/io5'
+import { TextInput } from '../../components'
 import { api, useGetUserQuery, useUpdateTodoMutation } from '../../services'
 import { useAppDispatch } from '../../store'
 import { ErrorResponse, Todo } from '../../types'
@@ -23,10 +26,19 @@ export default function TodoItem({ todo }: TodoItemProps) {
   const navigate = useNavigate()
 
   const { data: user } = useGetUserQuery()
-  const [updateTodo, { error }] = useUpdateTodoMutation()
+  const [updateTodo, { error, isLoading }] = useUpdateTodoMutation()
+
+  const [task, setTask] = useState(todo.task)
+
+  const showTaskActionButton = task !== todo.task
+  const disableTaskSaveButton = task.length === 0
 
   const handleTodoComplete = (completed: boolean) => {
     updateTodo({ id: todo.id, completed })
+  }
+
+  const handleTaskUpdate = () => {
+    updateTodo({ id: todo.id, task })
   }
 
   useEffect(() => {
@@ -55,7 +67,35 @@ export default function TodoItem({ todo }: TodoItemProps) {
             Edited by Administrator
           </Tag>
         )}
-        <Text>{todo.task}</Text>
+        {user ? (
+          <HStack>
+            <TextInput
+              placeholder="Task"
+              value={task}
+              onChange={e => setTask(e.target.value)}
+            />
+            {showTaskActionButton && (
+              <>
+                <IconButton
+                  icon={<IoCheckmark />}
+                  aria-label="Edit"
+                  disabled={disableTaskSaveButton}
+                  onClick={handleTaskUpdate}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                />
+                <IconButton
+                  icon={<IoClose />}
+                  aria-label="Edit"
+                  disabled={disableTaskSaveButton}
+                  onClick={() => setTask(todo.task)}
+                />
+              </>
+            )}
+          </HStack>
+        ) : (
+          <Text>{todo.task}</Text>
+        )}
         <HStack divider={<Box w="1" h="1" rounded="full" bg="gray.100" />}>
           <Text fontSize="sm" color="gray.600">
             {todo.username}
