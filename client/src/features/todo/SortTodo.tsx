@@ -10,7 +10,7 @@ import {
 
 interface SortProps extends BoxProps {}
 
-export default function Sort({ ...props }: SortProps) {
+export default function SortTodo({ ...props }: SortProps) {
   const dispatch = useAppDispatch()
 
   const sortOrder = useAppSelector(selectSortOrder)

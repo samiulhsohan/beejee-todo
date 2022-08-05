@@ -2,9 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import cookieParse from 'cookie-parser'
 import { router } from './router'
-import { __prod__ } from './constants'
+import { PORT, __prod__ } from './constants'
 
-const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(
@@ -19,4 +18,4 @@ app.use(cookieParse())
 app.use(express.json())
 app.use('/', router)
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))

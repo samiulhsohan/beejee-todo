@@ -7,7 +7,7 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { TextInput } from '../../components'
 import { useGetUserQuery, useLoginMutation } from '../../services'
 import { ErrorResponse } from '../../types'
@@ -18,23 +18,13 @@ type FormInput = {
 }
 
 export default function Login() {
-  const navigate = useNavigate()
-
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<FormInput>()
 
-  const onSubmit: SubmitHandler<FormInput> = async data => {
-    try {
-      await login(data)
-      reset()
-    } catch {
-      alert('Error creating todo')
-    }
-  }
+  const onSubmit: SubmitHandler<FormInput> = async data => login(data)
 
   const [login, { error, data }] = useLoginMutation()
   const { data: user } = useGetUserQuery()

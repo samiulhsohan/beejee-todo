@@ -7,4 +7,4 @@ export const router = Router()
 
 router.get('/', validate.getTodos, controller.getTodos)
 router.post('/', validate.createTodo, controller.createTodo)
-router.put('/:id', validate.updateTodo, authMiddleware, controller.updateTodo)
+router.put('/:id', authMiddleware, validate.updateTodo, controller.updateTodo)

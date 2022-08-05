@@ -21,13 +21,15 @@ export async function getTodos(req: Request, res: Response) {
 }
 
 export async function createTodo(req: Request, res: Response) {
-  const todo = await service.createTodo(req.body)
+  const { username, email, task } = req.body
+  const todo = await service.createTodo({ username, email, task })
   sendResponse(res, todo)
 }
 
 export async function updateTodo(req: Request, res: Response) {
   const { id } = req.params
-  const todo = await service.updateTodo({ id: +id, ...req.body })
+  const { task, completed } = req.body
+  const todo = await service.updateTodo({ id: +id, task, completed })
   if (!todo) return sendBadRequestError(res, 'Todo not found')
   sendResponse(res, todo)
 }

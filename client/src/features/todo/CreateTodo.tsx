@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button, HStack, Stack, VStack } from '@chakra-ui/react'
+import { Box, BoxProps, Button, HStack, Stack } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextInput } from '../../components'
 import { useCreateTodoMutation } from '../../services'
@@ -22,12 +22,8 @@ export default function CreateTodo({ ...props }: CreateTodoProps) {
   const [createTodo] = useCreateTodoMutation()
 
   const onSubmit: SubmitHandler<FormInput> = async data => {
-    try {
-      await createTodo(data)
-      reset()
-    } catch {
-      alert('Error creating todo')
-    }
+    await createTodo(data)
+    reset()
   }
 
   return (

@@ -9,10 +9,10 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { IoCheckmark, IoClose } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 import { TextInput } from '../../components'
-import { api, useGetUserQuery, useUpdateTodoMutation } from '../../services'
+import { api, useUpdateTodoMutation } from '../../services'
 import { useAppDispatch } from '../../store'
 import { ErrorResponse, Todo, User } from '../../types'
 

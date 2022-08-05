@@ -3,7 +3,7 @@ import { Pagination } from '../../components/'
 import { useGetTodosQuery } from '../../services'
 import { useAppDispatch, useAppSelector } from '../../store'
 import CreateTodo from './CreateTodo'
-import Sort from './Sort'
+import SortTodo from './SortTodo'
 import TodoList from './TodoList'
 import {
   selectCurrentPage,
@@ -35,7 +35,7 @@ export default function Todo() {
   return (
     <Container maxW="lg">
       <CreateTodo mt="8" />
-      <Sort mt="10" />
+      <SortTodo mt="10" />
       <TodoList mt="5" />
       <Pagination
         mt="4"
