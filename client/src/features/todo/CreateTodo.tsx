@@ -1,7 +1,9 @@
-import { Button, HStack, Stack, VStack } from '@chakra-ui/react'
+import { Box, BoxProps, Button, HStack, Stack, VStack } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextInput } from '../../components'
 import { useCreateTodoMutation } from '../../services'
+
+interface CreateTodoProps extends BoxProps {}
 
 type FormInput = {
   username: string
@@ -9,7 +11,7 @@ type FormInput = {
   task: string
 }
 
-export default function CreateTodo() {
+export default function CreateTodo({ ...props }: CreateTodoProps) {
   const {
     handleSubmit,
     register,
@@ -29,7 +31,7 @@ export default function CreateTodo() {
   }
 
   return (
-    <div>
+    <Box {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack border="1px" borderColor="gray.200" rounded="md" p="4">
           <HStack justify="start" align="start">
@@ -76,6 +78,6 @@ export default function CreateTodo() {
           </Button>
         </Stack>
       </form>
-    </div>
+    </Box>
   )
 }

@@ -1,19 +1,19 @@
-import { Box, Container, Heading } from '@chakra-ui/react'
-import { useGetTodosQuery } from '../../services'
-import CreateTodo from './CreateTodo'
+import { Container } from '@chakra-ui/react'
 import { Pagination } from '../../components/'
-import TodoList from './TodoList'
+import { useGetTodosQuery } from '../../services'
 import { useAppDispatch, useAppSelector } from '../../store'
-import {
-  selectSkip,
-  selectTake,
-  selectSortOrder,
-  selectSortBy,
-  setSkip,
-  selectCurrentPage,
-  setCurrentPage,
-} from './todoSlice'
+import CreateTodo from './CreateTodo'
 import Sort from './Sort'
+import TodoList from './TodoList'
+import {
+  selectCurrentPage,
+  selectSkip,
+  selectSortBy,
+  selectSortOrder,
+  selectTake,
+  setCurrentPage,
+  setSkip,
+} from './todoSlice'
 
 export default function Todo() {
   const dispatch = useAppDispatch()
@@ -34,10 +34,7 @@ export default function Todo() {
 
   return (
     <Container maxW="lg">
-      <Heading textAlign="center" my="12">
-        BeeJee Todo
-      </Heading>
-      <CreateTodo />
+      <CreateTodo mt="8" />
       <Sort mt="10" />
       <TodoList mt="5" />
       <Pagination

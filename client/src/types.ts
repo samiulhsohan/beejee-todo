@@ -4,6 +4,12 @@ export type APIResponse<T> = {
   result: T | null
 }
 
+export type ErrorResponse = {
+  success: false
+  errorMessage: string
+  result: null
+}
+
 export type Todo = {
   id: number
   username: string
@@ -20,3 +26,10 @@ export type GetTodoResponse = APIResponse<{ todo: Todo[]; count: number }>
 export type SortOrder = 'desc' | 'asc'
 
 export type TodoSortBy = 'username' | 'email' | 'completed' | 'createdAt'
+
+export type User = {
+  id: number
+  username: string
+}
+
+export type LoginResponse = APIResponse<{ token: string }>

@@ -1,11 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
-import { Todo } from './features'
+import { Navbar } from './components'
+import { Login, Todo } from './features'
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Todo />} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Todo />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </>
   )
 }
 

@@ -11,6 +11,6 @@ export async function login(username: string, password: string) {
   const isCorrectPassword = await bcrypt.compare(password, user.password)
   if (!isCorrectPassword) return null
 
-  const token = generateToken(user.username)
+  const token = generateToken(user.id, user.username)
   return { token }
 }

@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
+import { DecodedAccessToken, RequestWithUser } from './types'
 import { sendUnauthenticatedError, verifyToken } from './utils'
 
 export async function authMiddleware(
-  req: Request,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction,
 ) {
@@ -11,7 +12,8 @@ export async function authMiddleware(
   if (!token) return sendUnauthenticatedError(res)
 
   try {
-    verifyToken(token)
+    const decoded = verifyToken(token)
+    req.user = decoded as DecodedAccessToken
     next()
   } catch {
     sendUnauthenticatedError(res)
