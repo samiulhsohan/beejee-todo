@@ -1,4 +1,12 @@
-import { Box, BoxProps, Button, HStack, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  BoxProps,
+  Button,
+  HStack,
+  Stack,
+  useToast,
+} from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { TextInput } from '../../components'
 import { useCreateTodoMutation } from '../../services'
@@ -12,6 +20,8 @@ type FormInput = {
 }
 
 export default function CreateTodo({ ...props }: CreateTodoProps) {
+  const toast = useToast()
+
   const {
     handleSubmit,
     register,
@@ -19,12 +29,23 @@ export default function CreateTodo({ ...props }: CreateTodoProps) {
     reset,
   } = useForm<FormInput>()
 
-  const [createTodo] = useCreateTodoMutation()
+  const [createTodo, { data }] = useCreateTodoMutation()
 
   const onSubmit: SubmitHandler<FormInput> = async data => {
     await createTodo(data)
     reset()
   }
+
+  useEffect(() => {
+    if (data) {
+      toast({
+        title: 'Todo created',
+        description: 'Todo created successfully',
+        status: 'success',
+        isClosable: true,
+      })
+    }
+  }, [data])
 
   return (
     <Box {...props}>
