@@ -1,7 +1,7 @@
 export type APIResponse<T> = {
   success: boolean
   errorMessage: string | null
-  result: T | null
+  result: T
 }
 
 export type ErrorResponse = {

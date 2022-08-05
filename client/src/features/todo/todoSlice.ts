@@ -13,8 +13,8 @@ type TodoState = {
 const initialState: TodoState = {
   skip: 0,
   take: 3,
-  sortOrder: 'desc',
-  sortBy: 'createdAt',
+  sortOrder: 'asc',
+  sortBy: 'completed',
   currentPage: 1,
 }
 

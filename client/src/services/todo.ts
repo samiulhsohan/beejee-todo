@@ -1,4 +1,10 @@
-import { GetTodoResponse, SortOrder, Todo, TodoSortBy } from '../types'
+import {
+  APIResponse,
+  GetTodoResponse,
+  SortOrder,
+  Todo,
+  TodoSortBy,
+} from '../types'
 import { api } from './api'
 
 export const todoApi = api.injectEndpoints({
@@ -17,9 +23,8 @@ export const todoApi = api.injectEndpoints({
           sortOrder,
         },
       }),
-      transformResponse: (response: GetTodoResponse) =>
-        response.result ?? { count: 0, todo: [] },
-      providesTags: [{ type: 'Todo' as const, id: 'LIST' }],
+      transformResponse: (response: GetTodoResponse) => response.result,
+      providesTags: ['Todo'],
     }),
 
     createTodo: builder.mutation<
@@ -31,9 +36,26 @@ export const todoApi = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Todo' as const, id: 'LIST' }],
+      invalidatesTags: ['Todo'],
+    }),
+
+    updateTodo: builder.mutation<
+      Todo,
+      { id: number; completed?: boolean; task?: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/todo/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      transformResponse: (response: APIResponse<Todo>) => response.result,
+      invalidatesTags: ['Todo'],
     }),
   }),
 })
 
-export const { useCreateTodoMutation, useGetTodosQuery } = todoApi
+export const {
+  useCreateTodoMutation,
+  useGetTodosQuery,
+  useUpdateTodoMutation,
+} = todoApi

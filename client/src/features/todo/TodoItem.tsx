@@ -1,5 +1,5 @@
 import { Box, Checkbox, HStack, Stack, Tag, Text } from '@chakra-ui/react'
-import { useGetUserQuery } from '../../services'
+import { useGetUserQuery, useUpdateTodoMutation } from '../../services'
 import { Todo } from '../../types'
 import { getAccessToken } from '../../utils'
 
@@ -9,10 +9,20 @@ interface TodoItemProps {
 
 export default function TodoItem({ todo }: TodoItemProps) {
   const { data: user } = useGetUserQuery(undefined, { skip: !getAccessToken() })
+  const [updateTodo] = useUpdateTodoMutation()
+
+  const handleTodoComplete = (completed: boolean) => {
+    updateTodo({ id: todo.id, completed })
+  }
 
   return (
     <HStack py="2" spacing="4">
-      <Checkbox defaultChecked={todo.completed} size="lg" disabled={!user} />
+      <Checkbox
+        defaultChecked={todo.completed}
+        size="lg"
+        disabled={!user}
+        onChange={e => handleTodoComplete(e.target.checked)}
+      />
       <Stack spacing="1" align="start">
         {todo.edited && (
           <Tag size="sm" width="auto" colorScheme="yellow">
