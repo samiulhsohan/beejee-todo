@@ -51,6 +51,10 @@ export default function CreateTodo({ ...props }: CreateTodoProps) {
               placeholder="E-mail"
               {...register('email', {
                 required: 'E-mail is required',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Enter a valid email address',
+                },
               })}
               isInvalid={!!errors.email}
               error={errors.email?.message}
