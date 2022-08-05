@@ -27,7 +27,6 @@ export default function Pagination({
               <Button
                 key={idx}
                 colorScheme={page === currentPage ? 'yellow' : 'gray'}
-                disabled={page === currentPage}
                 onClick={() => onPageChange(page)}
               >
                 {page}

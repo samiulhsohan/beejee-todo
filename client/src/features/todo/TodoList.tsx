@@ -1,34 +1,38 @@
-import { Stack, StackDivider } from '@chakra-ui/react'
+import { Box, BoxProps, Stack, StackDivider } from '@chakra-ui/react'
 import { useGetTodosQuery } from '../../services'
 import { useAppSelector } from '../../store'
 import TodoItem from './TodoItem'
 import {
-  selectOrderBy,
+  selectSortOrder,
   selectSkip,
   selectSortBy,
   selectTake,
 } from './todoSlice'
 
-export default function TodoLists() {
+interface TodoListsProps extends BoxProps {}
+
+export default function TodoLists({ ...props }: TodoListsProps) {
   const skip = useAppSelector(selectSkip)
   const take = useAppSelector(selectTake)
-  const orderBy = useAppSelector(selectOrderBy)
+  const sortOrder = useAppSelector(selectSortOrder)
   const sortBy = useAppSelector(selectSortBy)
 
-  const { data } = useGetTodosQuery({ skip, take, sortBy, orderBy })
+  const { data } = useGetTodosQuery({ skip, take, sortBy, sortOrder })
 
   return (
-    <Stack
-      divider={<StackDivider />}
-      border="1px"
-      borderColor="gray.200"
-      px="4"
-      py="2"
-      borderRadius="md"
-    >
-      {data?.todo.map(todo => (
-        <TodoItem key={todo.id} {...{ todo }} />
-      ))}
-    </Stack>
+    <Box {...props}>
+      <Stack
+        divider={<StackDivider />}
+        border="1px"
+        borderColor="gray.200"
+        px="4"
+        py="2"
+        borderRadius="md"
+      >
+        {data?.todo.map(todo => (
+          <TodoItem key={todo.id} {...{ todo }} />
+        ))}
+      </Stack>
+    </Box>
   )
 }

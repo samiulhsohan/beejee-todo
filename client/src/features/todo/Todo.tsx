@@ -7,23 +7,24 @@ import { useAppDispatch, useAppSelector } from '../../store'
 import {
   selectSkip,
   selectTake,
-  selectOrderBy,
+  selectSortOrder,
   selectSortBy,
   setSkip,
   selectCurrentPage,
   setCurrentPage,
 } from './todoSlice'
+import Sort from './Sort'
 
 export default function Todo() {
   const dispatch = useAppDispatch()
 
   const skip = useAppSelector(selectSkip)
   const take = useAppSelector(selectTake)
-  const orderBy = useAppSelector(selectOrderBy)
+  const sortOrder = useAppSelector(selectSortOrder)
   const sortBy = useAppSelector(selectSortBy)
   const currentPage = useAppSelector(selectCurrentPage)
 
-  const { data } = useGetTodosQuery({ skip, take, sortBy, orderBy })
+  const { data } = useGetTodosQuery({ skip, take, sortBy, sortOrder })
 
   const handlePageChange = (page: number) => {
     const _skip = page === 1 ? 0 : (page - 1) * take
@@ -37,13 +38,12 @@ export default function Todo() {
         BeeJee Todo
       </Heading>
       <CreateTodo />
-      <Box mt="10">
-        <TodoList />
-      </Box>
+      <Sort mt="10" />
+      <TodoList mt="5" />
       <Pagination
         mt="4"
         totalItems={data?.count ?? 0}
-        itemsPerPage={3}
+        itemsPerPage={take}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />

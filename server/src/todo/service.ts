@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -6,20 +6,28 @@ export async function getTodos({
   skip,
   take,
   sortBy,
-  orderBy,
+  sortOrder,
 }: {
   skip: number
   take: number
   sortBy?: string
-  orderBy?: string
+  sortOrder?: Prisma.SortOrder
 }) {
   const count = await prisma.todo.count()
+  const _sortOrder = sortOrder ?? 'desc'
+
+  let order: Prisma.Enumerable<Prisma.TodoOrderByWithRelationInput> = [
+    { [sortBy ?? 'createdAt']: _sortOrder },
+  ]
+
+  if (sortBy === 'completed') {
+    order = [{ completed: _sortOrder }, { createdAt: 'desc' }]
+  }
+
   const todo = await prisma.todo.findMany({
     skip,
     take,
-    orderBy: {
-      [sortBy ?? 'createdAt']: orderBy ?? 'desc',
-    },
+    orderBy: order,
   })
 
   return {

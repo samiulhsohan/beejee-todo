@@ -17,6 +17,6 @@ export type Todo = {
 
 export type GetTodoResponse = APIResponse<{ todo: Todo[]; count: number }>
 
-export type OrderBy = 'desc' | 'asc'
+export type SortOrder = 'desc' | 'asc'
 
-export type TodoSortBy = 'username' | 'email' | 'task' | 'createdAt'
+export type TodoSortBy = 'username' | 'email' | 'completed' | 'createdAt'

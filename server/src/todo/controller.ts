@@ -1,16 +1,17 @@
+import { Prisma } from '@prisma/client'
 import { Request, Response } from 'express'
 import { sendBadRequestError, sendResponse, sendServerError } from '../utils'
 import * as service from './service'
 
 export async function getTodos(req: Request, res: Response) {
-  const { take, skip, orderBy, sortBy } = req.query
+  const { take, skip, sortOrder, sortBy } = req.query
 
   try {
     const todos = await service.getTodos({
       skip: +skip!,
       take: +take!,
       sortBy: sortBy as string,
-      orderBy: orderBy as string,
+      sortOrder: sortOrder as Prisma.SortOrder,
     })
     sendResponse(res, todos)
   } catch (err) {

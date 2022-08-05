@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
-import { OrderBy, TodoSortBy } from '../../types'
+import { SortOrder, TodoSortBy } from '../../types'
 
 type TodoState = {
   skip: number
   take: number
-  orderBy: OrderBy
+  sortOrder: SortOrder
   sortBy: TodoSortBy
   currentPage: number
 }
@@ -13,7 +13,7 @@ type TodoState = {
 const initialState: TodoState = {
   skip: 0,
   take: 3,
-  orderBy: 'desc',
+  sortOrder: 'desc',
   sortBy: 'createdAt',
   currentPage: 1,
 }
@@ -25,8 +25,8 @@ const slice = createSlice({
     setSkip: (state, action: PayloadAction<number>) => {
       state.skip = action.payload
     },
-    setOrderBy: (state, action: PayloadAction<OrderBy>) => {
-      state.orderBy = action.payload
+    setSortOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.sortOrder = action.payload
     },
     setSortBy: (state, action: PayloadAction<TodoSortBy>) => {
       state.sortBy = action.payload
@@ -37,11 +37,12 @@ const slice = createSlice({
   },
 })
 
-export const { setSkip, setOrderBy, setSortBy, setCurrentPage } = slice.actions
+export const { setSkip, setSortOrder, setSortBy, setCurrentPage } =
+  slice.actions
 export default slice.reducer
 
 export const selectSkip = (state: RootState) => state.todo.skip
 export const selectTake = (state: RootState) => state.todo.take
-export const selectOrderBy = (state: RootState) => state.todo.orderBy
+export const selectSortOrder = (state: RootState) => state.todo.sortOrder
 export const selectSortBy = (state: RootState) => state.todo.sortBy
 export const selectCurrentPage = (state: RootState) => state.todo.currentPage

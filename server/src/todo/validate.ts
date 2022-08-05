@@ -12,15 +12,14 @@ const getSchema = yup.object().shape({
       return (
         value === 'username' ||
         value === 'email' ||
-        value === 'task' ||
         value === 'completed' ||
         value === 'createdAt'
       )
     })
     .strict(true),
-  orderBy: yup
+  sortOrder: yup
     .string()
-    .test('order', 'invalid order', value => {
+    .test('sortOrder', 'invalid sort order', value => {
       if (!value) return true
       return value === 'desc' || value === 'asc'
     })
