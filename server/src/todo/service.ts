@@ -2,6 +2,15 @@ import { Prisma, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+const todoSelect = {
+  id: true,
+  completed: true,
+  edited: true,
+  email: true,
+  task: true,
+  username: true,
+}
+
 export async function getTodos({
   skip,
   take,
@@ -21,13 +30,14 @@ export async function getTodos({
   ]
 
   if (sortBy === 'completed') {
-    order = [{ completed: _sortOrder }, { createdAt: 'desc' }]
+    order = [{ completed: _sortOrder }, { updatedAt: 'desc' }]
   }
 
   const todo = await prisma.todo.findMany({
     skip,
     take,
     orderBy: order,
+    select: todoSelect,
   })
 
   return {
@@ -51,6 +61,7 @@ export async function createTodo({
       email,
       task,
     },
+    select: todoSelect,
   })
 }
 
@@ -74,5 +85,6 @@ export async function updateTodo({
       completed,
       edited: true,
     },
+    select: todoSelect,
   })
 }

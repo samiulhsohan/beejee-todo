@@ -17,8 +17,6 @@ export type Todo = {
   task: string
   completed: boolean
   edited: boolean
-  createdAt: Date
-  updatedAt: Date
 }
 
 export type GetTodoResponse = APIResponse<{ todo: Todo[]; count: number }>
@@ -31,5 +29,3 @@ export type User = {
   id: number
   username: string
 }
-
-export type LoginResponse = APIResponse<{ token: string }>

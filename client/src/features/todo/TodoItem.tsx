@@ -1,19 +1,45 @@
-import { Box, Checkbox, HStack, Stack, Tag, Text } from '@chakra-ui/react'
-import { useGetUserQuery, useUpdateTodoMutation } from '../../services'
-import { Todo } from '../../types'
-import { getAccessToken } from '../../utils'
+import {
+  Box,
+  Checkbox,
+  HStack,
+  Stack,
+  Tag,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { api, useGetUserQuery, useUpdateTodoMutation } from '../../services'
+import { useAppDispatch } from '../../store'
+import { ErrorResponse, Todo } from '../../types'
 
 interface TodoItemProps {
   todo: Todo
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const { data: user } = useGetUserQuery(undefined, { skip: !getAccessToken() })
-  const [updateTodo] = useUpdateTodoMutation()
+  const toast = useToast()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const { data: user } = useGetUserQuery()
+  const [updateTodo, { error }] = useUpdateTodoMutation()
 
   const handleTodoComplete = (completed: boolean) => {
     updateTodo({ id: todo.id, completed })
   }
+
+  useEffect(() => {
+    if (error && 'status' in error) {
+      dispatch(api.util.resetApiState())
+      toast({
+        title:
+          (error.data as ErrorResponse).errorMessage ?? 'Something went wrong',
+        status: 'error',
+      })
+      navigate('/login')
+    }
+  }, [error])
 
   return (
     <HStack py="2" spacing="4">

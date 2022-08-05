@@ -7,15 +7,14 @@ export async function authMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  const { authorization } = req.headers
-  const token = authorization?.split(' ')[1]
+  const token = req.cookies.token
   if (!token) return sendUnauthenticatedError(res)
 
   try {
     const decoded = verifyToken(token)
     req.user = decoded as DecodedAccessToken
     next()
-  } catch {
+  } catch (err) {
     sendUnauthenticatedError(res)
   }
 }

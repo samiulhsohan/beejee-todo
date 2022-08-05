@@ -1,17 +1,17 @@
-import { Box, Button, Heading, HStack, Spinner, Tag } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Spinner } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { api, useGetUserQuery } from '../services'
+import { api, useGetUserQuery, useLogoutMutation } from '../services'
 import { useAppDispatch } from '../store'
-import { removeAccessToken } from '../utils'
 
 export default function Navbar() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const { data: user, isFetching } = useGetUserQuery()
+  const [logout] = useLogoutMutation()
 
-  const handleLogout = () => {
-    removeAccessToken()
+  const handleLogout = async () => {
+    await logout()
     dispatch(api.util.resetApiState())
   }
 

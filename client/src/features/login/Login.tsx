@@ -1,20 +1,16 @@
 import {
   Alert,
-  AlertDescription,
   AlertIcon,
   AlertTitle,
-  Box,
   Button,
   Container,
-  HStack,
   Stack,
 } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { TextInput } from '../../components'
-import { useLoginMutation } from '../../services'
+import { useGetUserQuery, useLoginMutation } from '../../services'
 import { ErrorResponse } from '../../types'
-import { saveAccessToken } from '../../utils'
 
 type FormInput = {
   username: string
@@ -41,14 +37,12 @@ export default function Login() {
   }
 
   const [login, { error, data }] = useLoginMutation()
+  const { data: user } = useGetUserQuery()
 
   const errorMessage =
     error && 'data' in error ? (error.data as ErrorResponse).errorMessage : null
 
-  if (data?.token) {
-    saveAccessToken(data.token)
-    navigate('/')
-  }
+  if (user || data) return <Navigate to="/" />
 
   return (
     <Container maxW="md" mt="10">
