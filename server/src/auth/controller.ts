@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { __prod__ } from '../constants'
+import { cookieDomain, __prod__ } from '../constants'
 import {
   sendResponse,
   sendServerError,
@@ -17,7 +17,7 @@ export async function login(req: Request, res: Response) {
       httpOnly: true,
       secure: __prod__,
       sameSite: 'lax',
-      domain: __prod__ ? 'beejee.samiulhsohan.com' : undefined,
+      domain: cookieDomain,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
     sendResponse(res, data.user)
@@ -27,6 +27,6 @@ export async function login(req: Request, res: Response) {
 }
 
 export async function logout(_: Request, res: Response) {
-  res.clearCookie('token')
+  res.clearCookie('token', { domain: cookieDomain })
   sendResponse(res, null)
 }
